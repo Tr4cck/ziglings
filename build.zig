@@ -103,7 +103,7 @@ pub fn build(b: *Build) !void {
             const WINAPI = std.os.windows.WINAPI;
             const DWORD = std.os.windows.DWORD;
             const ENABLE_VIRTUAL_TERMINAL_PROCESSING = 0x0004;
-            const STD_ERROR_HANDLE = @bitCast(DWORD, @as(i32, -12));
+            const STD_ERROR_HANDLE: DWORD = @bitCast(@as(i32, -12));
             extern "kernel32" fn GetStdHandle(id: DWORD) callconv(WINAPI) ?*anyopaque;
             extern "kernel32" fn GetConsoleMode(console: ?*anyopaque, out_mode: *DWORD) callconv(WINAPI) u32;
             extern "kernel32" fn SetConsoleMode(console: ?*anyopaque, mode: DWORD) callconv(WINAPI) u32;
@@ -1055,6 +1055,27 @@ const exercises = [_]Exercise{
         .main_file = "102_testing.zig",
         .output = "",
         .kind = .@"test",
+    },
+    .{
+        .main_file = "103_tokenization.zig",
+        .output =
+        \\My
+        \\name
+        \\is
+        \\Ozymandias
+        \\King
+        \\of
+        \\Kings
+        \\Look
+        \\on
+        \\my
+        \\Works
+        \\ye
+        \\Mighty
+        \\and
+        \\despair
+        \\This little poem has 15 words!
+        ,
     },
     .{
         .main_file = "999_the_end.zig",
